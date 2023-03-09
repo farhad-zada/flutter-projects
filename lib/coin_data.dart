@@ -3,7 +3,11 @@ import 'package:http/http.dart' as http;
 
 const kTextStyle = TextStyle(fontSize: 20.0, color: Colors.white);
 
-const String apiKey = '46C390D3-7F01-4980-AC97-97AB19862F18';
+const Map<String, String> apiKeys = {
+  'Key One': '46C390D3-7F01-4980-AC97-97AB19862F18',
+  'Key Two': 'D961D47F-029A-433B-9CD6-357702FE1E26',
+  'Key Three': '17E0B381-113C-4122-9DCC-7FC3B98EA6A2',
+};
 const coinUrl =
     'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=D961D47F-029A-433B-9CD6-357702FE1E26';
 
@@ -12,28 +16,6 @@ const List<String> kCurrenciesList = [
   'EUR',
   'TRY',
   'RUB',
-  /*'AUD',
-  'BRL',
-  'CAD',
-  'CNY',
-  'EUR',
-  'GBP',
-  'HKD',
-  'IDR',
-  'ILS',
-  'INR',
-  'JPY',
-  'MXN',
-  'NOK',
-  'NZD',
-  'PLN',
-  'TRY',
-  'RON',
-  'RUB',
-  'SEK',
-  'SGD',
-  'USD',
-  'ZAR',*/
 ];
 
 const List<String> kCryptoList = [
@@ -45,10 +27,15 @@ const List<String> kCryptoList = [
   'BNB',
 ];
 
+const List<String> kApiKeys = [
+  'Key One',
+  'Key Two',
+];
+
 class CoinData {
-  dynamic getExchangeRate(coin, currency) async {
+  dynamic getExchangeRate(coin, currency, apiKey) async {
     dynamic response = await http.get(Uri.parse(
-        'https://rest.coinapi.io/v1/exchangerate/$coin/$currency?apikey=$apiKey'));
+        'https://rest.coinapi.io/v1/exchangerate/$coin/$currency?apikey=${apiKeys[apiKey]}'));
     return response;
   }
 }

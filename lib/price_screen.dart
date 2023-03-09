@@ -13,6 +13,7 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String? selectedCurrency = 'EUR';
   String? selectedCoin = 'ETH';
+  String? selectedKey = 'Key One';
   double? coinExchangeRate;
 
   List<Text> currencyList = [];
@@ -24,7 +25,11 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   void initializer() async {
-    dynamic source = await CoinData().getExchangeRate('ETH', 'EUR');
+    dynamic source = await CoinData().getExchangeRate(
+      selectedCoin,
+      selectedCurrency,
+      selectedKey,
+    );
     setState(() {
       coinExchangeRate = jsonDecode(source.body)['rate'];
     });
@@ -75,8 +80,8 @@ class _PriceScreenState extends State<PriceScreen> {
                         dropdownMenuData: kCryptoList,
                         selected: selectedCoin,
                         toDo: (value) async {
-                          dynamic coinData = await CoinData()
-                              .getExchangeRate(value, selectedCurrency);
+                          dynamic coinData = await CoinData().getExchangeRate(
+                              value, selectedCurrency, selectedKey);
                           setState(
                             () {
                               selectedCoin = value;
@@ -109,29 +114,66 @@ class _PriceScreenState extends State<PriceScreen> {
                 bottom: 30.0,
               ),
               color: const Color(0xff404448),
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30.0,
-                  vertical: 10.0,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xff006658),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: AndroidPicker(
-                  dropdownMenuData: kCurrenciesList,
-                  selected: selectedCurrency,
-                  toDo: (value) async {
-                    dynamic coinData =
-                        await CoinData().getExchangeRate(selectedCoin, value);
-                    setState(
-                      () {
-                        selectedCurrency = value;
-                        coinExchangeRate = jsonDecode(coinData.body)['rate'];
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0,
+                      vertical: 10.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xff006658),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: AndroidPicker(
+                      dropdownMenuData: kCurrenciesList,
+                      selected: selectedCurrency,
+                      toDo: (value) async {
+                        dynamic coinData = await CoinData().getExchangeRate(
+                          selectedCoin,
+                          value,
+                          selectedKey,
+                        );
+                        setState(
+                          () {
+                            selectedCurrency = value;
+                            coinExchangeRate =
+                                jsonDecode(coinData.body)['rate'];
+                          },
+                        );
                       },
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0,
+                      vertical: 10.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffff9944),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: AndroidPicker(
+                      dropdownMenuData: apiKeys.keys.toList(),
+                      selected: selectedKey,
+                      toDo: (value) async {
+                        dynamic coinData = await CoinData().getExchangeRate(
+                          selectedCoin,
+                          selectedCurrency,
+                          value,
+                        );
+                        setState(
+                          () {
+                            selectedKey = value;
+                            coinExchangeRate =
+                                jsonDecode(coinData.body)['rate'];
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
