@@ -8,7 +8,11 @@ const coinUrl =
     'https://rest.coinapi.io/v1/exchangerate/BTC/USD?apikey=D961D47F-029A-433B-9CD6-357702FE1E26';
 
 const List<String> kCurrenciesList = [
-  'AUD',
+  'USD',
+  'EUR',
+  'TRY',
+  'RUB',
+  /*'AUD',
   'BRL',
   'CAD',
   'CNY',
@@ -29,13 +33,16 @@ const List<String> kCurrenciesList = [
   'SEK',
   'SGD',
   'USD',
-  'ZAR',
+  'ZAR',*/
 ];
 
 const List<String> kCryptoList = [
   'BTC',
   'ETH',
   'LTC',
+  'DOGE',
+  'APE',
+  'BNB',
 ];
 
 class CoinData {

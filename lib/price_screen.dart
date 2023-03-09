@@ -39,7 +39,7 @@ class _PriceScreenState extends State<PriceScreen> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/crypto_img.jpeg'),
+            image: AssetImage('images/abc.jpeg'),
             fit: BoxFit.cover,
           ),
         ),
@@ -54,7 +54,7 @@ class _PriceScreenState extends State<PriceScreen> {
                 0.0,
               ),
               child: Card(
-                color: Colors.lightBlueAccent,
+                color: Colors.teal[800],
                 elevation: 5.0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -87,7 +87,7 @@ class _PriceScreenState extends State<PriceScreen> {
                         },
                       ),
                       const SizedBox(
-                        width: 10.0,
+                        width: 20.0,
                       ),
                       Text(
                         '${coinExchangeRate?.toStringAsFixed(2)} $selectedCurrency',
@@ -108,20 +108,30 @@ class _PriceScreenState extends State<PriceScreen> {
               padding: const EdgeInsets.only(
                 bottom: 30.0,
               ),
-              color: Colors.blueGrey[700],
-              child: AndroidPicker(
-                dropdownMenuData: kCurrenciesList,
-                selected: selectedCurrency,
-                toDo: (value) async {
-                  dynamic coinData =
-                      await CoinData().getExchangeRate(selectedCoin, value);
-                  setState(
-                    () {
-                      selectedCurrency = value;
-                      coinExchangeRate = jsonDecode(coinData.body)['rate'];
-                    },
-                  );
-                },
+              color: const Color(0xff404448),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30.0,
+                  vertical: 10.0,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xff006658),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: AndroidPicker(
+                  dropdownMenuData: kCurrenciesList,
+                  selected: selectedCurrency,
+                  toDo: (value) async {
+                    dynamic coinData =
+                        await CoinData().getExchangeRate(selectedCoin, value);
+                    setState(
+                      () {
+                        selectedCurrency = value;
+                        coinExchangeRate = jsonDecode(coinData.body)['rate'];
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ],

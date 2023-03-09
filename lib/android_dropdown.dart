@@ -16,9 +16,18 @@ class AndroidPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
+      elevation: 20,
+      iconEnabledColor: Colors.white,
+      iconSize: 24,
+      icon: const Icon(Icons.arrow_drop_down_circle_outlined),
       dropdownColor: Colors.black87,
       focusColor: Colors.white,
       iconDisabledColor: Colors.white,
+      isDense: true,
+      underline: SizedBox(
+        height: 1.0,
+        width: MediaQuery.of(context).size.width / 10,
+      ),
       value: selected,
       items: getDropDownMenuData(),
       onChanged: toDo,
@@ -32,7 +41,7 @@ class AndroidPicker extends StatelessWidget {
         DropdownMenuItem(
           value: given,
           child: Text(
-            given,
+            '$given ',
             style: kTextStyle,
           ),
         ),
